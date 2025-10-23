@@ -29,10 +29,10 @@ namespace libacsfile {
         std::vector<uint8_t> Data() const;
         bool WriteToFile(std::filesystem::path file);
     private:
-        friend class CharacterPrivate;
-        explicit Sound(SoundPrivate *priv);
+        friend class libacsfile::CharacterPrivate;
+        explicit Sound(libacsfile::SoundPrivate *priv);
         ~Sound();
-        SoundPrivate *p = nullptr;
+        libacsfile::SoundPrivate *p = nullptr;
     };
 
     class Image {
@@ -45,10 +45,10 @@ namespace libacsfile {
         uint16_t Height() const;
         bool WriteToFile(std::filesystem::path file);
     private:
-        friend class CharacterPrivate;
-        explicit Image(ImagePrivate *priv);
+        friend class libacsfile::CharacterPrivate;
+        explicit Image(libacsfile::ImagePrivate *priv);
         ~Image();
-        ImagePrivate *p = nullptr;
+        libacsfile::ImagePrivate *p = nullptr;
     };    
 
     class Overlay {
@@ -67,13 +67,13 @@ namespace libacsfile {
         int16_t OffsetY() const;
         uint16_t Width() const;
         uint16_t Height() const;
-        Image* Image() const;
+        libacsfile::Image* Image() const;
     private:
-        friend class OverlayPrivate;
-        friend class FramePrivate;
-        explicit Overlay(OverlayPrivate *priv);
+        friend class libacsfile::OverlayPrivate;
+        friend class libacsfile::FramePrivate;
+        explicit Overlay(libacsfile::OverlayPrivate *priv);
         ~Overlay();
-        OverlayPrivate *p = nullptr;
+        libacsfile::OverlayPrivate *p = nullptr;
     };
 
     class Frame;
@@ -82,7 +82,7 @@ namespace libacsfile {
         uint16_t FrameID() const;
         uint16_t Probability() const;
     private:
-        friend class FramePrivate;
+        friend class libacsfile::FramePrivate;
         explicit Branch() = default;
         uint16_t _FrameID{};
         uint16_t _Probability{};
@@ -90,14 +90,14 @@ namespace libacsfile {
 
     class FrameImage {
     public:
-        Image* GetImage() const;
+        libacsfile::Image* GetImage() const;
         uint32_t GetImageID() const;
         int16_t OffsetX() const;
         int16_t OffsetY() const;
     private:
-        friend class FramePrivate;
+        friend class libacsfile::FramePrivate;
         explicit FrameImage() = default;
-        Image *ImagePtr = nullptr;
+        libacsfile::Image *ImagePtr = nullptr;
         int16_t _OffsetX{};
         int16_t _OffsetY{};
     };
@@ -105,17 +105,17 @@ namespace libacsfile {
     class Frame {
     public:
         uint16_t AudioIndex() const;
-        Sound* Sound() const;
+        libacsfile::Sound* Sound() const;
         uint16_t Duration() const;
         int16_t ExitFrame() const;
         std::vector<FrameImage*> Images() const;
         std::vector<Branch*> Branches() const;
         std::vector<Overlay*> MouthOverlays() const;
     private:
-        friend class AnimationPrivate;
-        explicit Frame(FramePrivate *priv);
+        friend class libacsfile::AnimationPrivate;
+        explicit Frame(libacsfile::FramePrivate *priv);
         ~Frame();
-        FramePrivate *p = nullptr;
+        libacsfile::FramePrivate *p = nullptr;
     };
 
     class Animation {
@@ -130,10 +130,10 @@ namespace libacsfile {
         std::string ReturnAnimation() const;
         std::map<uint16_t, Frame*> Frames() const;
     private:
-        friend class CharacterPrivate;
-        explicit Animation(AnimationPrivate *priv);
+        friend class libacsfile::CharacterPrivate;
+        explicit Animation(libacsfile::AnimationPrivate *priv);
         ~Animation();
-        AnimationPrivate *p = nullptr;
+        libacsfile::AnimationPrivate *p = nullptr;
     };
 
     class Character {
@@ -172,13 +172,13 @@ namespace libacsfile {
 
         std::vector<std::string> AnimationNames() const;
         std::map<std::string, Animation*> Animations() const;
-        Animation* GetAnimation(std::string &name);
+        libacsfile::Animation* GetAnimation(std::string &name);
         bool HasAnimation(const std::string &name);
         bool HasState(const std::string &state);
 
         std::map<uint16_t, Image*> Images() const;
         std::map<uint16_t, Sound*> Sounds() const;
     private:
-        CharacterPrivate *p = nullptr;
+        libacsfile::CharacterPrivate *p = nullptr;
     };
 }

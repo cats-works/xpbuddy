@@ -83,8 +83,8 @@ namespace libacsfile {
     class ImagePrivate
     {
     private:
-        friend class Image;
-        friend class CharacterPrivate;
+        friend class libacsfile::Image;
+        friend class libacsfile::CharacterPrivate;
         explicit ImagePrivate(std::ifstream &ifs, uint32_t offset, CharacterPrivate *priv);
         ~ImagePrivate();
         bool WriteToFile(std::filesystem::path file);
@@ -96,27 +96,27 @@ namespace libacsfile {
         std::vector<uint8_t> ImageData;
         uint32_t ImageDataSize;
         BITMAPINFO *bi;
-        Image *PublicImage = nullptr;
-        CharacterPrivate *c = nullptr;
+        libacsfile::Image *PublicImage = nullptr;
+        libacsfile::CharacterPrivate *c = nullptr;
     };
 
     class OverlayPrivate
     {
     private:
-        friend class Overlay;
-        friend class FramePrivate;
+        friend class libacsfile::Overlay;
+        friend class libacsfile::FramePrivate;
         explicit OverlayPrivate(std::ifstream &ifs, CharacterPrivate *priv);
         Overlay::Type OverlayType{};
         bool ReplaceTop{};
         uint16_t ImageID{};
-        Image* Image = nullptr;
+        libacsfile::Image* Image = nullptr;
         uint8_t Unknown{};
         bool HasRegionData{};
         int16_t OffsetX{};
         int16_t OffsetY{};
         uint16_t Width{};
         uint16_t Height{};
-        CharacterPrivate *c = nullptr;
+        libacsfile::CharacterPrivate *c = nullptr;
     };
 
     class FramePrivate
@@ -133,22 +133,22 @@ namespace libacsfile {
         int16_t ExitFrameID{};
         std::vector<Branch*> Branches{};
         std::vector<Overlay*> MouthOverlays{};
-        CharacterPrivate *c = nullptr;
+        libacsfile::CharacterPrivate *c = nullptr;
     };
 
     class AnimationPrivate
     {
     private:
-        friend class Animation;
-        friend class CharacterPrivate;
+        friend class libacsfile::Animation;
+        friend class libacsfile::CharacterPrivate;
         explicit AnimationPrivate(std::ifstream &ifs, uint32_t offset, CharacterPrivate *priv);
         ~AnimationPrivate();
         std::string Name{};
         std::string DisplayName{};
-        Animation::TransitionType Transition{};
+        libacsfile::Animation::TransitionType Transition{};
         std::string ReturnAnimation{};
         std::map<uint16_t, Frame*> Frames{};
-        CharacterPrivate *c = nullptr;
+        libacsfile::CharacterPrivate *c = nullptr;
     };
 
     class CharacterPrivate
@@ -181,7 +181,7 @@ namespace libacsfile {
         ACSLOCATOR ACS2AnimationInfo;
         ACSLOCATOR ACS2ImageInfo;
         ACSLOCATOR ACS2AudioInfo;
-        Character::Type Type = Character::Invalid;
+        libacsfile::Character::Type Type = libacsfile::Character::Invalid;
         RGBQUAD ForegroundColor{};
         RGBQUAD BackgroundColor{};
         RGBQUAD BorderColor{};
@@ -219,7 +219,7 @@ namespace libacsfile {
         uint32_t ColorSize{};
         ICONIMAGE ColorBitmap{};
         std::map<std::string, std::vector<std::string>> States;
-        std::map<std::string, std::vector<Animation*>> StatePtrs;
+        std::map<std::string, std::vector<libacsfile::Animation*>> StatePtrs;
 
         // Fields correspond with ACSLOCALIZEDINFO
         uint16_t LangID{};
@@ -227,8 +227,8 @@ namespace libacsfile {
         std::string CharacterDescription{};
         std::string CharacterExtraData{};
 
-        std::map<std::string, Animation*> animations;
-        std::map<uint16_t, Image*> images;
-        std::map<uint16_t, Sound*> sounds;
+        std::map<std::string, libacsfile::Animation*> animations;
+        std::map<uint16_t, libacsfile::Image*> images;
+        std::map<uint16_t, libacsfile::Sound*> sounds;
     };
 }
