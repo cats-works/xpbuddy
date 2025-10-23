@@ -18,10 +18,18 @@ Character::~Character()
 
 bool Character::Load(const string& filename)
 {
-    try {
+    try
+    {
         p = new CharacterPrivate(filename);
     }
-    catch(exception e) {
+    catch(runtime_error r)
+    {
+        last_error = r.what();
+        return false;
+    }
+    catch(exception e)
+    {
+        last_error = e.what();
         return false;
     }
 
@@ -37,6 +45,11 @@ bool Character::Loaded()
         return false;
 
     return p->acsValid;
+}
+
+string Character::GetLastError() const
+{
+    return last_error;
 }
 
 string Character::GUID() const

@@ -149,6 +149,7 @@ namespace libacsfile {
         ~Character();
         bool Load(const std::string &filename);
         bool Loaded();
+        std::string GetLastError() const;
         std::string GUID() const;
         std::string Name() const;
         std::string Description() const;
@@ -180,5 +181,6 @@ namespace libacsfile {
         std::map<uint16_t, Sound*> Sounds() const;
     private:
         libacsfile::CharacterPrivate *p = nullptr;
+        std::string last_error;
     };
 }

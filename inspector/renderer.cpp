@@ -114,6 +114,20 @@ void CharacterWindow::Animate(const QString &name)
     }
 }
 
+bool CharacterWindow::isLoaded() const
+{
+    Q_D(const CharacterWindow);
+    if(!d->m_char)
+        return false;
+
+    return d->m_char->Loaded();
+}
+
+QString CharacterWindow::getLastError() const
+{
+    return QString::fromStdString(Character()->GetLastError());
+}
+
 QString CharacterWindow::characterName() const
 {
     return QString::fromStdString(Character()->Name());

@@ -20,6 +20,8 @@ public:
     CharacterWindow(const QString &filename, QWidget *parent = nullptr);
     ~CharacterWindow();
     void Animate(const QString &name);
+    bool isLoaded() const;
+    QString getLastError() const;
     QString characterName() const;
     QString description() const;
 

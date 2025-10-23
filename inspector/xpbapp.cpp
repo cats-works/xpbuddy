@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 #include <QMutex>
+#include <QMessageBox>
 
 LoggerWindow* g_logger = nullptr;
 QMutex g_logMutex;
@@ -66,15 +67,19 @@ bool XPBApplication::openFile()
     if(file.exists())
     {
         auto *w = new PropertiesWindow(fn);
-        w->show();
-        m_openAgents.append(w);
-        connect(w, &QDialog::finished, this, [this]() {
-            auto window = qobject_cast<PropertiesWindow*>(sender());
-            if(window)
-                m_openAgents.removeOne(window);
-        });
-
-        return true;
+        if(w->isLoaded())
+        {
+            w->show();
+            m_openAgents.append(w);
+            connect(w, &QDialog::finished, this, [this]() {
+                auto window = qobject_cast<PropertiesWindow*>(sender());
+                if(window)
+                    m_openAgents.removeOne(window);
+            });
+            return true;
+        }
+        else
+            QMessageBox::critical(nullptr, tr("Error Loading %1").arg(file.fileName()), w->getLastError());
     }
 
     return false;

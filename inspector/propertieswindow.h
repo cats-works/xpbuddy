@@ -12,6 +12,8 @@ class PropertiesWindow : public QDialog
     Q_OBJECT
 public:
     PropertiesWindow(const QString &filename, QWidget *parent = nullptr);
+    bool isLoaded();
+    QString getLastError() const;
 protected:
     void closeEvent(QCloseEvent *event) override;
 private:

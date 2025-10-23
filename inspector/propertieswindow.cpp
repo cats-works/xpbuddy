@@ -25,21 +25,40 @@ PropertiesWindow::PropertiesWindow(const QString &filename, QWidget *parent)
     m_tabs->addTab(m_animationList, tr("Animations"));
 
     lblDescription->setWordWrap(true);
-    lblDescription->setText(QString::fromStdString(m_render->Character()->Description()));
-    for(auto &i : m_render->Character()->States())
-        m_stateList->addItem(QString::fromStdString(i.first));
+    if(m_render->isLoaded())
+    {
+        lblDescription->setText(QString::fromStdString(m_render->Character()->Description()));
+        for(auto &i : m_render->Character()->States())
+            m_stateList->addItem(QString::fromStdString(i.first));
 
-    for(auto &i : m_render->Character()->AnimationNames())
-        m_animationList->addItem(QString::fromStdString(i));
+        for(auto &i : m_render->Character()->AnimationNames())
+            m_animationList->addItem(QString::fromStdString(i));
 
-    connect(m_animationList, &QListWidget::itemActivated, this, [this](QListWidgetItem *item) {
-        m_render->Animate(item->text());
-    });
+        connect(m_animationList, &QListWidget::itemActivated, this, [this](QListWidgetItem *item) {
+            m_render->Animate(item->text());
+        });
 
-    setWindowTitle(QString::fromStdString(m_render->Character()->Name()));
-    setWindowFilePath(filename);
+        setWindowTitle(QString::fromStdString(m_render->Character()->Name()));
+        setWindowFilePath(filename);
 
-    m_render->show();
+        m_render->show();
+    }
+}
+
+bool PropertiesWindow::isLoaded()
+{
+    if(m_render)
+        return m_render->isLoaded();
+
+    return false;
+}
+
+QString PropertiesWindow::getLastError() const
+{
+    if(m_render)
+        return m_render->getLastError();
+
+    return QString();
 }
 
 void PropertiesWindow::closeEvent(QCloseEvent *event)
