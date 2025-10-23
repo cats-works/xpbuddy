@@ -14,7 +14,7 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
-
+#include <cstring>
 #include <stdlib.h>
 
 #define FLAG_VOICE_OUTPUT        (1u << 4)
