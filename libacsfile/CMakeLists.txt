@@ -17,7 +17,6 @@ add_library(libacsfile
     acs_private.h acs_private.cpp
 
     acsfile.h acsfile.cpp
-    README.md
     acs_wintypes.h)
 
 target_include_directories(libacsfile PRIVATE
